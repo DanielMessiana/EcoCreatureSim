@@ -55,7 +55,8 @@ class Creature():
 
 # <CreatureBuilder>
 # ----------------------------------
-# The CreatureBuilder creates a creature object
+# The CreatureBuilder creates a creature object step by step, allowing for 
+# specification of attributes
 # ----------------------------------
 class CreatureBuilder():
 	def __init__(self):
@@ -69,6 +70,19 @@ class CreatureBuilder():
 
 	def getCreature(self):
 		return self.creature
+
+class World():
+	self.color = "white"
+
+
+	def setSize(self, size):
+		self.size = size
+
+	def run(self):
+		pygame.init()
+		width, height = 1900, 1150
+		while main:
+			screen.fill(white)
 
 
 g1 = Genome(np.array(["A", "B", "C", "D", "E"]))
