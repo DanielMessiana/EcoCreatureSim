@@ -1,5 +1,3 @@
-
-
 # <Genome> 
 # ----------------------------------
 # A Genome object is comprised of an arbitrary # of letters, 5 for now.
