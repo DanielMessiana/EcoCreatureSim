@@ -1,6 +1,6 @@
 import numpy as np
 import random as rand
-import time, os
+import time, os, pygame, config
 
 # <Genome> 
 # ----------------------------------
@@ -26,7 +26,6 @@ class Gene():
 	def __init__(self, genomes):
 		self.genomes = genomes
 
-
 	def getGene(self):
 		for gene in self.genomes:
 			gene.getInstructions()
@@ -44,7 +43,8 @@ class Loc():
 
 # <Creature>
 # ----------------------------------
-# One Creature object has a Gene object and a Loc object
+# One Creature object has a Gene object and a Loc object. These will be the
+# subject of the simulation.
 # ----------------------------------
 class Creature():
 	def setGene(self, gene):
@@ -71,19 +71,79 @@ class CreatureBuilder():
 	def getCreature(self):
 		return self.creature
 
-class World():
-	self.color = "white"
+# <TitleScreen>
+# ----------------------------------
+# Displays the title screen, which will allow the user to start the 
+# simulation.
+# ----------------------------------
+class TitleScreen():
+	def __init__(self, screen, clock):
+		# Main GUI variables from game
+		self.screen = screen
+		self.clock = clock
+
+		# Title text
+		self.titletext = config.FONT_LARGE.render("Eco Creature Simulator", True, config.LIGHT_GREY)
+		self.titletextRect = self.titletext.get_rect(center=(config.SCREEN_WIDTH / 1.18, 100))
+
+		# Start button
 
 
-	def setSize(self, size):
-		self.size = size
+	def display(self):
+		self.screen.blit(self.titletext, self.titletextRect)
 
-	def run(self):
+		pygame.display.flip()
+		self.clock.tick(30)
+
+# <SimScreen>
+# ----------------------------------
+# Displays the simulation screen, which will allow the user to see the 
+# simulation.
+# ----------------------------------
+class SimScreen():
+	def __init__(self, screen, clock):
+		# Main GUI variables from game
+		self.screen = screen
+		self.clock = clock
+
+	def display(self):
+
+		pygame.display.flip()
+		self.clock.tick(30)
+
+# <Game>
+# ----------------------------------
+# Runs the game loop in order to display the pygame application,
+# ----------------------------------
+class Game():
+	# Constructor with main variables
+	def __init__(self):
+		# Main GUI variables
 		pygame.init()
-		width, height = 1900, 1150
-		while main:
-			screen.fill(white)
+		self.screen = pygame.display.set_mode((config.SCREEN_WIDTH, config.SCREEN_HEIGHT))
+		self.clock = pygame.time.Clock()
+		self.main = True
 
+		# Screen variables
+		self.titleScreen = TitleScreen(self.screen, self.clock)
+		self.titleScreenOn = True
+		self.simScreen = SimScreen(self.screen, self.clock)
+		self.simScreenOn= False
+
+	# Main game loop to run the world 
+	def run(self):
+
+		
+
+		while self.main:
+			self.screen.fill(config.WHITE)
+
+			for event in pygame.event.get():
+				if event.type == pygame.QUIT:
+					self.main = False
+
+			if self.titleScreenOn == True:
+				self.titleScreen.display()
 
 g1 = Genome(np.array(["A", "B", "C", "D", "E"]))
 g2 = Genome(np.array(["B", "C", "D", "E", "A"]))
@@ -97,3 +157,6 @@ cBuilder = CreatureBuilder()
 cBuilder.buildGene(Gene1)
 c1 = cBuilder.getCreature()
 c1.gene.getGene()
+
+game = Game()
+game.run()
