@@ -30,6 +30,19 @@ class Game():
 			for event in pygame.event.get():
 				if event.type == pygame.QUIT:
 					self.main = False
+				elif event.type == pygame.MOUSEBUTTONDOWN and self.simScreenOn:
+					if self.simScreen.pop_input.rect.collidepoint(event.pos):
+						self.simScreen.pop_input.active = not self.simScreen.pop_input.active
+					else:
+						self.simScreen.pop_input.active = False
+				elif event.type == pygame.KEYDOWN and self.simScreen.pop_input.active:
+					if event.key == pygame.K_RETURN:
+						self.population = int(self.simScreen.pop_input.input_text)
+						self.simScreen.pop_input.input_text = ""
+					elif event.key == pygame.K_BACKSPACE:
+						self.simScreen.pop_input.input_text = self.simScreen.pop_input.input_text[:-1]
+					else:
+						self.simScreen.pop_input.input_text += event.unicode
 
 			# Show title screen if it is on
 			if self.titleScreenOn == True:

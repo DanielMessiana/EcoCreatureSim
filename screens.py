@@ -6,7 +6,7 @@ import config, pygame
 # text boxes.
 # ----------------------------------
 class Text():
-	def __init__(self, text, position, size, font, color, screen):
+	def __init__(self, text, position, size, font, screen):
 		self.text = text
 		self.position = position
 		self.size = size
@@ -24,6 +24,29 @@ class Text():
 	def setText(self, text):
 		self.text = text
 		self.text_surface = font.render(text, True, config.BLACK)
+
+# <InputBox
+# ----------------------------------
+# An input box class to be displayed on screen
+# ----------------------------------
+class InputBox():
+	def __init__(self, position, size, font, input_text, screen):
+		self.position = position
+		self.size = size
+		self.font = font
+		self.input_text = input_text
+		self.active = False
+		self.screen = screen
+
+		self.rect = pygame.Rect(position[0], position[1], size[0], size[1])
+		self.input_surface = self.font.render(self.input_text, True, config.BLACK)
+
+	def draw(self):
+		self.input_surface = self.font.render(self.input_text, True, config.BLACK)
+		# Draw input box
+		pygame.draw.rect(self.screen, config.BLACK, self.rect, 2)
+		input_rect = self.input_surface.get_rect(center=self.rect.center)
+		self.screen.blit(self.input_surface, input_rect)
 
 # <Button>
 # ----------------------------------
@@ -76,7 +99,6 @@ class TitleScreen():
 			position=(config.SCREEN_WIDTH // 2 - 100, 100),
 			size=(200, 50),
 			font=config.FONT_LARGE,
-			color=config.LIGHT_GREY,
 			screen=self.screen
 		)
 
@@ -112,6 +134,16 @@ class SimScreen():
 		self.clock = clock
 		self.simOn = False
 
+		# Population set text field
+		self.pop_input = InputBox(
+			position=(config.SCREEN_WIDTH // 2 - 200, config.SCREEN_HEIGHT // 2 - 300),
+			size=(100, 50),
+			font=config.FONT_MEDIUM,
+			input_text="50",
+			screen=self.screen
+		)
+
+		# Run Simulation button
 		self.run_button = Button(
 			text="Run simulation",
 			position=(config.SCREEN_WIDTH // 2 - 100, config.SCREEN_HEIGHT // 2),
@@ -122,13 +154,19 @@ class SimScreen():
 			screen=self.screen
 		)
 
-	def initialize_creatures(self):
+
+
+	def initialize_creatures(self, population):
 		from creatures import CreatureBuilder, Gene, Genome
 
 
+
 	def display(self):
-		if self.simOn == False:
+		if not self.simOn:
 			self.run_button.draw()
+			self.pop_input.draw()
+		elif self.simOn:
+
 
 		pygame.display.flip()
 		self.clock.tick(30)

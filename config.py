@@ -3,6 +3,7 @@
 WHITE = (255, 255, 255)
 LIGHT_GREY = (10, 10, 10)
 BLACK = (0, 0, 0)
+BLUE = (0, 0, 240)
 GREEN = (0, 200, 0)
 GREEN_HOVER = (0, 255, 0)
 

@@ -5,12 +5,22 @@
 # animal and what physical traits it displays. 
 # ----------------------------------
 class Genome():
-	def __init__(self, letters):
-		self.instructions = letters
+	def setInstructions(self, instructions):
+		self.instructions = instructions
 
 	def getInstructions(self):
-		print(self.instructions)
-		#return self.instructions
+		return self.instructions
+
+# <GenomeBuilder> 
+# ----------------------------------
+# The GenomeBuilder object creates a Genome object step by step, allowing  
+# for specification of Genomes
+# ----------------------------------
+class GenomeBuilder():
+	def __init__(self):
+		self.genome = Genome()
+
+	def buildInstructions(self, instructions):
 
 # <Gene>
 # ----------------------------------
@@ -18,13 +28,24 @@ class Genome():
 # will have one type of DNA that they can pass on to offspring.
 # ----------------------------------
 class Gene():
-	# genomes -> np array of genome objects
-	def __init__(self, genomes):
+	def setGenomes(self, genomes):
 		self.genomes = genomes
 
-	def getGene(self):
-		for gene in self.genomes:
-			gene.getInstructions()
+	def getGenomes(self):
+		return self.genomes
+
+# <GeneBuilder>
+# ----------------------------------
+# The GeneBuilder object creates a Gene object step by step, allowing  
+# for specification of Genomes
+# ----------------------------------
+class GeneBuilder():
+	def __init__(self):
+		self.gene = Gene()
+		self.genomeBuilder = GenomeBuilder()
+
+	def buildGeneomes(self, genomes):
+		self.gene.setGenomes(genomes)
 
 # <Loc>
 # ----------------------------------
@@ -51,8 +72,8 @@ class Creature():
 
 # <CreatureBuilder>
 # ----------------------------------
-# The CreatureBuilder creates a creature object step by step, allowing for 
-# specification of attributes
+# The CreatureBuilder object creates a Creature object step by step, allowing  
+# for specification of attributes
 # ----------------------------------
 class CreatureBuilder():
 	def __init__(self):
