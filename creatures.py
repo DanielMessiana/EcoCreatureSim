@@ -21,6 +21,10 @@ class GenomeBuilder():
 		self.genome = Genome()
 
 	def buildInstructions(self, instructions):
+		self.genome.setInstructions(instructions)
+
+	def getGenome(self):
+		return self.genome
 
 # <Gene>
 # ----------------------------------
@@ -42,10 +46,34 @@ class Gene():
 class GeneBuilder():
 	def __init__(self):
 		self.gene = Gene()
-		self.genomeBuilder = GenomeBuilder()
 
-	def buildGeneomes(self, genomes):
-		self.gene.setGenomes(genomes)
+	def buildGenomes(self, genomes):
+		self.gene.setGenomes(genomes)		
+
+	def getGene(self):
+		return self.gene
+
+# <GeneRandomizer>
+# ----------------------------------
+# The GeneRandomizer object creates a large amount of different Genes to
+# begin a simulation
+# ----------------------------------
+class GeneRandomizer():
+	def __init__(self, ):
+		self.genomeBuilder = GenomeBuilder()
+		self.geneBuilder = GeneBuilder()
+
+# <GeneReader>
+# ----------------------------------
+# The GeneReader object will read the genome of a creature and provide
+# the creature with the appropriate attribute or behavior.
+# ----------------------------------
+class GeneReader():
+	def __init__(self, gene):
+		self.gene = gene
+
+	def readGene(self):
+		pass
 
 # <Loc>
 # ----------------------------------
@@ -70,6 +98,10 @@ class Creature():
 	def setLoc(self, loc):
 		self.loc = loc
 
+	# This will determine the creatures decision every second
+	def update(self):
+		pass
+
 # <CreatureBuilder>
 # ----------------------------------
 # The CreatureBuilder object creates a Creature object step by step, allowing  
@@ -87,3 +119,7 @@ class CreatureBuilder():
 
 	def getCreature(self):
 		return self.creature
+
+
+
+	

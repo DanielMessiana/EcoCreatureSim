@@ -25,6 +25,7 @@ class Game():
 	# Main game loop to run the world 
 	def run(self):
 		while self.main:
+			# Fill screen with white
 			self.screen.fill(config.WHITE)
 
 			for event in pygame.event.get():
@@ -42,11 +43,13 @@ class Game():
 					elif event.key == pygame.K_BACKSPACE:
 						self.simScreen.pop_input.input_text = self.simScreen.pop_input.input_text[:-1]
 					else:
+						# Adds input text to the input box
 						self.simScreen.pop_input.input_text += event.unicode
 
 			# Show title screen if it is on
 			if self.titleScreenOn == True:
 				self.titleScreen.display()
+				# If start button is pressed, sim screen will turn on
 				if self.titleScreen.handle_input():
 					self.titleScreenOn = False
 					self.simScreenOn = True

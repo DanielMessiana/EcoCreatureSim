@@ -1,11 +1,11 @@
 import config, pygame
 
-# <Text>
+# <TextBox>
 # ----------------------------------
 # A text class to be displayed on screen, it also allows easy creation of new
 # text boxes.
 # ----------------------------------
-class Text():
+class TextBox():
 	def __init__(self, text, position, size, font, screen):
 		self.text = text
 		self.position = position
@@ -94,7 +94,7 @@ class TitleScreen():
 		self.clock = clock
 
 		# Title text
-		self.titletext = Text(
+		self.titletext = TextBox(
 			text="Eco Creature Simulator",
 			position=(config.SCREEN_WIDTH // 2 - 100, 100),
 			size=(200, 50),
@@ -130,9 +130,11 @@ class TitleScreen():
 class SimScreen():
 	def __init__(self, screen, clock):
 		# Main GUI variables from game
+		from world import World
 		self.screen = screen
 		self.clock = clock
 		self.simOn = False
+		self.world = World(1000, self.screen, )
 
 		# Population set text field
 		self.pop_input = InputBox(
@@ -166,7 +168,7 @@ class SimScreen():
 			self.run_button.draw()
 			self.pop_input.draw()
 		elif self.simOn:
-
+			self.world.drawWorld()
 
 		pygame.display.flip()
 		self.clock.tick(30)
